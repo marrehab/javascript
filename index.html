@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie Photo Interactive</title>
+    <style>
+        #gallery {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        #mainImage {
+            width: 500px;
+            height: 300px;
+            margin-top: 30px;
+            background-size: cover;
+            background-position: center;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Galerie Photo Interactive</h1>
+    
+    <div id="gallery">
+        <img src="iris.jpeg" alt="Fleur iris" tabindex="0" id="img1">
+        <img src="jaune.jpeg" alt="Fleur jaune" tabindex="0" id="img2">
+        <img src="lavande.jpeg" alt="Lavande" tabindex="0" id="img3">
+        <img src="lotus.jpeg" alt="Lotus" tabindex="0" id="img4">
+        <img src="rose.jpeg" alt="Rose" tabindex="0" id="img5">
+        <img src="rouge.jpeg" alt="rouge" tabindex="0" id="img6">
+    </div>
+
+    <div id="mainImage" alt="Grande image"></div>
+
+    <script>
+        // Fonction qui réagit à l'événement onmouseover
+        function changeMainImage(image) {
+            document.getElementById('mainImage').style.backgroundImage = "url('" + image.src + "')";
+            console.log("Image survolée : " + image.alt);
+        }
+
+        // Fonction qui réagit à l'événement onmouseleave
+        function resetMainImage() {
+            document.getElementById('mainImage').style.backgroundImage = "";
+            console.log("Souris retirée de l'image");
+        }
+
+        // Fonction qui réagit à l'événement onfocus
+        function changeMainImageFocus(image) {
+            document.getElementById('mainImage').style.backgroundImage = "url('" + image.src + "')";
+            console.log("Focus sur l'image : " + image.alt);
+        }
+
+        // Fonction qui réagit à l'événement onblur
+        function resetMainImageBlur() {
+            document.getElementById('mainImage').style.backgroundImage = "";
+            console.log("Focus retiré de l'image");
+        }
+
+        // Ajout des événements aux images
+        const images = document.querySelectorAll('#gallery img');
+        images.forEach(function(image) {
+            image.addEventListener('mouseover', function() {
+                changeMainImage(image);
+            });
+            image.addEventListener('mouseleave', function() {
+                resetMainImage();
+            });
+            image.addEventListener('focus', function() {
+                changeMainImageFocus(image);
+            });
+            image.addEventListener('blur', function() {
+                resetMainImageBlur();
+            });
+        });
+
+        // Fonction onload pour le chargement de la page
+        window.onload = function() {
+            console.log("Page chargée");
+        };
+
+        // Ajout des attributs tabindex via JavaScript
+        for (let i = 0; i < images.length; i++) {
+            images[i].setAttribute('tabindex', i + 1); // Tabindex commence à 1
+        }
+    </script>
+</body>
+</html>
